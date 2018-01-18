@@ -11,7 +11,7 @@ import rosegraphics as rg
 
 def main():
     """ Calls the other functions to demonstrate them. """
-    run_test_draw_L()
+    #run_test_draw_L()
     run_test_draw_wall_on_right()
 
 
@@ -84,17 +84,22 @@ def draw_L(window, circle, r, c):
     for k in range(r):
         for j in range(3):
             circle1 = rg.Circle(rg.Point(circle.center.x + (2* circle.radius) * j, circle.center.y), circle.radius)
+            circle1.fill_color = circle.fill_color
             circle1.attach_to(window)
             window.render(.1)
-        circle.center.y += (2 * circle.radius)*k
+        circle.center.y += (2 * circle.radius)
         circle.center.x = x_start
     for l in range(3):
-        for m in range(c):
-            circle1 = rg.Circle(rg.Point(circle.center.x + (2 * circle.radius) * j, circle.center.y), circle.radius)
+        for m in range(c + 3):
+            circle1 = rg.Circle(rg.Point(circle.center.x + (2 * circle.radius) * m , circle.center.y), circle.radius)
+            circle1.fill_color = circle.fill_color
             circle1.attach_to(window)
             window.render(.1)
+        circle.center.y += (2 * circle.radius)
+        circle.center.x = x_start
+    window.continue_on_mouse_click()
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
@@ -138,6 +143,15 @@ def draw_wall_on_right(rectangle, n, window):
     # TODO: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    for k in range(n):
+        rectangle1 = rg.Rectangle(rg.Point(rectangle.corner_1.x - rectangle.get_width()*k, rectangle.corner_1.y ), rg.Point(rectangle.corner_2.x - rectangle.get_width()*k, rectangle.corner_2.y))
+        for j in range(n - k, 0, -1):
+            rectangle1 = rg.Rectangle(rg.Point(rectangle1.corner_1.x, rectangle.corner_1.y +rectangle.get_height()*j ), rg.Point(rectangle1.corner_2.x, rectangle.corner_2.y + rectangle.get_height()*j))
+            rectangle1.attach_to(window)
+            window.render(.15)
+        rectangle = rg.Rectangle(rg.Point(rectangle.corner_1.x, rectangle.corner_1.y +rectangle.get_height()), rg.Point(rectangle.corner_2.x, rectangle.corner_2.y + rectangle.get_height()))
+
+
 
 
 # ----------------------------------------------------------------------
